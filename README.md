@@ -15,6 +15,12 @@ Project ini merupakan project REST API User. Fitur API mencangkup:
 + Project ini menggunakan Go `Echo Framework` sebagai web framework
 + Project ini menggunakan `Postman` sebagai API tester
 
+## Project Structure
+![alskdj](https://user-images.githubusercontent.com/92352300/152677882-c225017d-c7fb-466b-9bc2-8be774a61483.PNG)
+
+## API Flow
+![Untitled Diagram (1)](https://user-images.githubusercontent.com/92352300/152677980-52268550-5a86-4a6e-b6b6-07431ffe6d22.jpg)
+
 ## Users Endpoint
  Method | Endpoint | Param | Fungsi| Body Required | JWT Required |
 -----|-----|--------|----------|----------|------|
@@ -29,9 +35,9 @@ API yang membutuhkan JWT Auth perlu menginput Bearer Token
 
 ## How to Use in Local
 1. Clone repository
-2. Buat `.env` file, yang akan berisi setting dari :
-`export CONNECTION_STRING="mongodb:your_host@your_port"`
-3. Buat database "users" pada MongoDB
+2. Buat `.env` file, yang akan berisi setting dari : 
+   `export CONNECTION_STRING="mongodb:your_host@your_port"`
+3. Buat database `users` pada MongoDB
 4. RUN `go run main.go`
 5. Gunakan Postman untuk mengakses API dengan alamat `localhost:8080/endpoint_name`. API dengan JWT Auth diakses dengan alamat `localhost:8080/jwt/endpoint_name`
 6. Ketika program dijalankan, satu admin dengan `email: john`, `password: 12345678` sudah tergenerate. Login dengan data tersebut untuk dapat mengakses API lain yang membutuhkan JTW Auth.
