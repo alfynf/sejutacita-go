@@ -1,0 +1,22 @@
+{
+   "kind":"Service",
+   "apiVersion":"v1",
+   "metadata":{
+      "name":"sejutacita",
+      "labels":{
+         "app":"sejutacita"
+      }
+   },
+   "spec":{
+      "ports": [
+         {
+           "port":3000,
+           "targetPort":"http-server"
+         }
+      ],
+      "selector":{
+         "app":"sejutacita"
+      },
+      "type": "LoadBalancer"
+   }
+}

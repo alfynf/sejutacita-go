@@ -1,0 +1,37 @@
+{
+   "kind":"ReplicationController",
+   "apiVersion":"v1",
+   "metadata":{
+      "name":"sejutacita",
+      "labels":{
+         "app":"sejutacita"
+      }
+   },
+   "spec":{
+      "replicas":3,
+      "selector":{
+         "app":"sejutacita"
+      },
+      "template":{
+         "metadata":{
+            "labels":{
+               "app":"sejutacita"
+            }
+         },
+         "spec":{
+            "containers":[
+               {
+                  "name":"sejutacita",
+                  "image":"hub.docker.com/sejutacita:latest",
+                  "ports":[
+                     {
+                        "name":"http-server",
+                        "containerPort":3000
+                     }
+                  ]
+               }
+            ]
+         }
+      }
+   }
+}
