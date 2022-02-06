@@ -1,0 +1,474 @@
+openapi: '3.0.2'
+info:
+  title: Test SejutaCita - Alfy Nur Fauzia
+  description: Alfy Nur Fauzia API Documentation for SejutaCita Technical Test
+  termsOfService: http://example.com/terms/
+  contact:
+    name: API Support
+    url: http://www.example.com/support
+    email: support@example.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.1
+servers:
+  # Added by API Auto Mocking Plugin
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/alfynf/SejutaCitaTest/1.0.1
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/alfynf/SejutaCitaTest/1.0.1
+    variables:
+      environment: 
+        default: dev
+        enum:
+          - "prod"
+          - "dev"
+tags:
+  - name: Auth
+    description: Authentication
+  - name: Users
+    description: User control
+paths:
+  /login:
+    post:
+      tags:
+        - Auth
+      summary: login user
+      description: Login user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requestLogin'
+            examples:
+              userData:
+                description: "Admin data user"
+                value: {
+                  email: "john@mail.com",
+                  password: "12345678"
+                }
+      responses:
+        '200':
+          description: Success Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseLoginSuccess'
+              examples:
+                responseData1:
+                  description: response success
+                  value: {
+                    code: 200,
+                    status: "Successful Operation",
+                    data: {
+                      name: John Doe,
+                      username: john,
+                      email: john@mail.com,
+                      password: $2a$14$mTx1dwtVUrlAtgLKErtmDee.d1aIS17xLpDImSaTA0zdgHf7vnMU2,
+                      role: user,
+                      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2MzgzMjYxODAsInVzZXJJZCI6MSwidXNlcm5hbWUiOiJhZG1pbiJ9.AebFR-oQjUSOMez2ucDWkiMrS2eQIPmcYm5c71qZ_co"
+                    }
+                  }
+        '400':
+          description: Failed Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/failedResponse'
+              examples:
+                responseData1:
+                  description: response failed 1
+                  value: {
+                    code: 400,
+                    status: Operation Failed,
+                    error message: "Empty email and password data"
+                  }
+                responseData2:
+                  description: response failed 2
+                  value: {
+                    code: 400,
+                    status: Operation Failed,
+                    error message: "Wrong email format"
+                  }
+                responseData3:
+                  description: response failed 3
+                  value: {
+                    code: 400,
+                    status: Operation Failed,
+                    error message: "Login failed"
+                  }
+  ####################################
+  #  USERS
+  ####################################
+  /users:
+    post:
+      tags:
+        - Users
+      summary: register
+      description: Register user
+      security:
+        - JWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/registerUserData'
+            examples:
+              userData1:
+                description: "Example data user"
+                value: {
+                  nama: "Alfy N",
+                  username: alfyn,
+                  email: "alfyn@mail.com",
+                  password: "12345678",
+                  role: user,
+                }
+      responses:
+        '200':
+          description: Success Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse'
+              examples:
+                responseData1:
+                  description: response success 1
+                  value: {
+                    code: 200,
+                    status: "Successful Operation",
+                  }
+        '400':
+          description: Failed Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/failedResponse'
+              examples:
+                responseData1:
+                  description: response failed 1
+                  value: {
+                    code: 400,
+                    status: "Operation Failed",
+                    error message: "Not allowed to create user, please login as admin"
+                  }
+                responsedata2:
+                  description: response failed 2
+                  value: {
+                    code: 400,
+                    status: "Operation Failed",
+                    error message: "Empty Data"
+                  }
+                responsedata3:
+                  description: response failed 3
+                  value: {
+                    code: 400,
+                    status: "Operation Failed",
+                    error message: "Password must more than 5 character"
+                  }
+                responsedata4:
+                  description: response failed 4
+                  value: {
+                    code: 400,                  
+                    status: "Operation Failed",
+                    error message: "Email is already used"
+                  }
+                responsedata5:
+                  description: response failed 5
+                  value: {
+                    code: 400,                  
+                    status: "Operation Failed",
+                    error message: "Wrong email format"
+                  }
+                responsedata6:
+                  description: response failed 6
+                  value: {
+                    code: 400,                  
+                    status: "Operation Failed",
+                    error message: "Failed to create new data"
+                  }
+    get:
+      tags:
+        - Users
+      description: Get User by JWT
+      security:
+        - JWTAuth: []
+      responses:
+        '200':
+          description: Success Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseUserData'
+              examples:
+                responseData1:
+                  description: response success 1
+                  value: {
+                    code: 200,
+                    status: "Successful Operation",
+                    data: {
+                      name: Alfy N,
+                      username: alfyn,
+                      email: alfy@mail.com,
+                      role: user
+                    }
+                  }
+        '400':
+          description: Failed Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/failedResponse'
+              examples:
+                responseData1:
+                  description: response failed 1
+                  value: {
+                    code: 400,
+                    status: "Operation Failed",
+                    error message: "Failed to get data"
+                  }               
+    put:
+      tags:
+        - Users
+      description: Edit user profile
+      parameters:
+        - in: query
+          name: username
+          schema:
+            type: string
+          description: want to be updated username     
+      security:
+        - JWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/registerUserData'
+            examples:
+              userData1:
+                description: "Example update data user"
+                value: {
+                  nama: "Alfy Nur Fauzia",
+                  username: alfyn,
+                  email: "alfyn@mail.com",
+                  password: "12345678",
+                  role: user,
+                }
+      responses:
+        '200':
+          description: Success Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse'
+              examples:
+                responseData1:
+                  description: response success 1
+                  value: {
+                    code: 200,
+                    status: "Successful Operation",
+                  }
+        '400':
+          description: Failed Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/failedResponse'
+              examples:
+                responseData1:
+                  description: response failed 1
+                  value: {
+                    code: 400,
+                    status: "Operation Failed",
+                    error message: "Not allowed to update user, please login as admin"
+                  }
+                responsedata2:
+                  description: response failed 2
+                  value: {
+                    code: 400,
+                    status: "Operation Failed",
+                    error message: "Empty Data"
+                  }
+                responsedata3:
+                  description: response failed 3
+                  value: {
+                    code: 400,
+                    status: "Operation Failed",
+                    error message: "Password must more than 5 character"
+                  }
+                responsedata4:
+                  description: response failed 4
+                  value: {
+                    code: 400,                  
+                    status: "Operation Failed",
+                    error message: "Wrong email format"
+                  }
+                responsedata5:
+                  description: response failed 5
+                  value: {
+                    code: 400,                  
+                    status: "Operation Failed",
+                    error message: "Failed to update data"
+                  }
+    delete:
+      tags:
+        - Users
+      description: Delete User by ID
+      parameters:
+        - in: query
+          name: username
+          schema:
+            type: string
+          description: want to be deleted username      
+      security:
+        - JWTAuth: []
+      responses:
+        '200':
+          description: Success Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse'
+              examples:
+                responseData1:
+                  description: response success 1
+                  value: {
+                    code: 200,
+                    status: "Successful Operation",
+                  }
+        '400':
+          description: Failed Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/failedResponse'
+              examples:
+                responseData1:
+                  description: response failed 1
+                  value: {
+                    code: 400,
+                    status: "Failed Operation",
+                    message: "Not allowed to delete user, please login as admin"
+                  }
+                responseData2:
+                  description: response failed 2
+                  value: {
+                    code: 400,
+                    status: "Failed Operation",
+                    message: "Failed to delete data"
+                  }                  
+#==================================#
+#    COMPONENT
+#==================================#
+components:
+
+  #==================================#    
+  #    JWT
+  #==================================#
+  securitySchemes:
+    JWTAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: "use Token"
+  #==================================#
+  #    SCHEMAS
+  #==================================#
+  schemas:
+  #    Login
+    requestLogin:
+      type: object
+      properties:
+        "email":
+          type: string
+        "password":
+          type: string
+  #    Login Success
+    responseLoginSuccess:
+      type: object
+      properties: {
+        "code":{
+          type: number
+        },
+        "message": {
+          type: string
+        },
+        "data":{
+          type: object
+        }
+      }
+  #    Register
+    registerUserData:
+      type: object
+      properties:
+        "name":
+          type: string
+        "username":
+          type: string
+        "email":
+          type: string
+        "password":
+          type: string
+          minLength: 5
+        "role":
+          type: string
+          example: user or admin
+  #==================================#
+  #    USERS
+  #==================================#
+  #    Get User
+    responseUserData:
+      type: object
+      properties:
+        "name":
+          type: string
+        "username":
+          type: string
+        "email":
+          type: string
+        "role":
+          type: string
+  #==================================#
+  #    GLOBAL RESPONSE
+  #==================================#
+  #    Success
+    successResponse:
+      type: object
+      properties: {
+        "code":{
+          type: number
+        },
+        "status": {
+          type: string
+        }
+      }
+  #    Success
+    successResponseWithData:
+      type: object
+      properties: {
+        "code":{
+          type: number
+        },
+        "status": {
+          type: string
+        },
+        "data":{
+          type: object
+        }
+      }
+  #    Failed
+    failedResponse:
+      type: object
+      properties: {
+        "code":{
+          type: number
+        },
+        "status":{
+        type: string
+        },
+        "error message": {
+          type: string
+        }
+      }
